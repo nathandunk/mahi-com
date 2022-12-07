@@ -571,8 +571,11 @@ int RS232_OpenComport(int comport_number, int baudrate, const char *mode)
                    break;
     case 1000000 : strcpy(mode_str, "baud=1000000");
                    break;
-    default      : printf("invalid baudrate\n");
-                   return(1);
+    default      : 
+                   if(baudrate <= 0) return -1;
+
+                   std::string ss = "baud=" + std::to_string(baudrate);
+                   strcpy(mode_str,ss.c_str());
                    break;
   }
 
